@@ -18,13 +18,15 @@ var err error
 func InitDb(){
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
 					utils.DbUser,utils.DbPassword,utils.DbHost,utils.DbPort,utils.DbName)
-	db,err = gorm.Open(mysql.Open(dsn),&gorm.Config{})
+	db,err = gorm.Open(mysql.Open(dsn),&gorm.Config{
+		//DisableForeignKeyConstraintWhenMigrating: true,
+	})
 	if err != nil {
 		fmt.Println("数据库连接失败，请检查参数是否正确,err:",err)
 	}
 
 
-	db.AutoMigrate(&User{},&Article{},&Category{})
+	db.AutoMigrate(&User{},&Category{},&Article{})
 
 	sqlDb,_:=db.DB()
 	//设置最大可连接数

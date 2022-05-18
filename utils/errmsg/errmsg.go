@@ -16,6 +16,11 @@ const (
 	//code=2000...文章模块的错误
 
 	//code=3000...分类模块的错误
+	ERROR_CATENAME_USED = 2001
+	ERROR_CATE_WRONG=2002
+	ERROR_CATE_NOT_EXIST =2003
+
+
 )
 
 var codeMsg = map[int]string{
@@ -28,6 +33,10 @@ var codeMsg = map[int]string{
 	ERROR_TOKEN_RUNTIME:"TOKEN 已过期～",
 	ERROR_TOKEN_WRONG:"TOKEN 错误~",
 	ERROR_TOKEN_TYPE_WRONG:"TOKEN 格式错误～",
+
+	ERROR_CATENAME_USED:"类别名已存在～",
+	ERROR_CATE_WRONG:"类别错误～",
+	ERROR_CATE_NOT_EXIST:"类别不存在～",
 }
 
 //GetErrMsg 根据错误码返回对应的错误信息
