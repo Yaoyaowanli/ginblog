@@ -28,13 +28,31 @@ func CreateArt(data *Article) int {
 	return errmsg.SUCCESS
 }
 
-// todo 查询分类下所有文章
+// GetCateArt 查询分类下所有文章
+func GetCateArt(id,pageSize,pageNo int)([]Article,int){
+	var cateArtList []Article
+	offset := (pageNo-1)*pageSize
+	if pageNo == -1 && pageSize == -1{
+		offset = -1
+	}
+	err := db.Preload("Category").Limit(pageSize).Offset(offset).Where("Cid=?",id).Find(&cateArtList).Error
+	if err != nil {
+		return nil,errmsg.ERROR_CATE_NOT_EXIST
+	}
+	return cateArtList,errmsg.SUCCESS
+}
 
+// GetArtInfo 查询单个文章
+func GetArtInfo(id int)(Article,int){
+	var art Article
+	err = db.Preload("Category").Where("id=?",id).First(&art).Error
+	if err != nil {
+		return art,errmsg.ERROR_ART_NOT_EXIST
+	}
+	return art,errmsg.SUCCESS
+}
 
-// todo 查询单个文章
-
-
-// todo  查询文章列表
+// GetArt  查询文章列表
 func GetArt(pageSize,pageNo int)([]Article,int){
 	var art []Article
 	offset := (pageNo-1)*pageSize
