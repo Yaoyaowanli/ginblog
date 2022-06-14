@@ -105,3 +105,26 @@ func FindByID(id int) *User{
 	}
 	return &user
 }
+
+
+//CheckLogin 登陆验证
+func CheckLogin(username,password string)int{
+	var user User
+	//查询用户
+	db.Where("username =?",username).First(&user)
+
+	//无此用户ID
+	if user.ID == 0 {
+		return errmsg.ERROR_USER_NOT_EXIST
+	}
+	//密码错误
+	if ScryptPw(password) != user.Password {
+		return errmsg.ERROR_PASSWORD_WRONG
+	}
+	//权限不够
+	if user.Role != 0 {
+		return errmsg.ERROR_USER_NO_RIGHT
+	}
+
+	return errmsg.SUCCESS
+}

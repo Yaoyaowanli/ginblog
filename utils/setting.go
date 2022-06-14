@@ -7,17 +7,22 @@ import (
 	"gopkg.in/ini.v1"
 )
 
-var (
+var ( // server
 	AppMode string
 	HttpPort string
-
-
+	JwtKey string
+	//  database
 	Db string
 	DbHost string
 	DbPort string
 	DbUser string
 	DbPassword string
 	DbName string
+	//QiNiu
+	AccessKey string
+	SecretKey string
+	Bucket string
+	QiniuServer string
 )
 
 //init 读取ini文件
@@ -28,12 +33,15 @@ func init() {
 	}
 	LoadServer(file)
 	LoadDb(file)
+	LoadQiNiu(file)
 }
 
 //LoadServer 读取config中server参数
 func LoadServer(file *ini.File){
 	AppMode = file.Section("server").Key("AppMode").MustString("debug")
 	HttpPort = file.Section("server").Key("HttpPort").MustString(":3000")
+	JwtKey = file.Section("server").Key("JwtKey").MustString("89js82js72")
+
 }
 
 //LoadDb 读取config中dataBase参数
@@ -44,4 +52,12 @@ func LoadDb(file *ini.File){
 	DbUser = file.Section("dataBase").Key("DbUser").MustString("root")
 	DbPassword = file.Section("dataBase").Key("DbPassword").MustString("yaoyuan52163#")
 	DbName = file.Section("dataBase").Key("DbName").MustString("ginblog")
+}
+
+
+func LoadQiNiu(file *ini.File){
+	AccessKey = file.Section("qiNiu").Key("AccessKey").String()
+	AccessKey = file.Section("qiNiu").Key("AccessKey").String()
+	Bucket = file.Section("qiNiu").Key("Bucket").String()
+	QiniuServer = file.Section("qiNiu").Key("QiniuServer").String()
 }
