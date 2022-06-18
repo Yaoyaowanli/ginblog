@@ -1,5 +1,6 @@
 package errmsg
 
+//定义项目的错误码
 const (
 	SUCCESS = 200
 	ERROR = 500
@@ -24,6 +25,7 @@ const (
 	ERROR_ART_WRONG=3002
 )
 
+// codeMsg 全局map 键为错误码，值为错误码对应的错误信息
 var codeMsg = map[int]string{
 	SUCCESS:"OK",
 	ERROR:"FAIL",
@@ -45,7 +47,7 @@ var codeMsg = map[int]string{
 	ERROR_ART_WRONG:"文章错误",
 }
 
-//GetErrMsg 根据错误码返回对应的错误信息
+//GetErrMsg 根据错误码返回codeMsg中对应的错误信息
 func GetErrMsg(code int)string{
 	return codeMsg[code]
 }

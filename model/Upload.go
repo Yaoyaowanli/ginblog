@@ -6,6 +6,7 @@ import (
 	"ginblog/utils/errmsg"
 	"github.com/qiniu/go-sdk/v7/auth/qbox"
 	"github.com/qiniu/go-sdk/v7/storage"
+	"log"
 	"mime/multipart"
 )
 
@@ -35,8 +36,9 @@ func UploadFile (file multipart.File,fileSize int64)(string,int){
 	//ret 上传回复内容
 	ret := storage.PutRet{}
 	//PutWithoutKey 用来以表单方式上传一个文件。
-	err := formUploader.PutWithoutKey(context.Background(),ret,upToken,file,fileSize,&putExtra)
+	err := formUploader.PutWithoutKey(context.Background(),&ret,upToken,file,fileSize,&putExtra)
 	if err != nil {
+		log.Println(err)
 		return "",errmsg.ERROR
 	}
 	//上传成功

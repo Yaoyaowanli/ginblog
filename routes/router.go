@@ -13,10 +13,15 @@ import (
 func InitRouter(){
 
 	gin.SetMode(utils.AppMode)
-	engine := gin.Default()
+	engine := gin.New()
+	//注册中间件，logger是日志中间件，recovery捕获panic
+	engine.Use(middleware.Logger())
+	engine.Use(gin.Recovery())
+	engine.Use(middleware.Cors())
 
 	//有权限的
 	auth := engine.Group("api/v1")
+	//路由组中间件
 		auth.Use(middleware.JwtToken())
 	{
 		//用户模块的路由接口

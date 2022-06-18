@@ -14,7 +14,7 @@ var db *gorm.DB
 var err error
 
 
-
+//InitDb 初始化数据库
 func InitDb(){
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
 					utils.DbUser,utils.DbPassword,utils.DbHost,utils.DbPort,utils.DbName)
@@ -25,7 +25,7 @@ func InitDb(){
 		fmt.Println("数据库连接失败，请检查参数是否正确,err:",err)
 	}
 
-
+//根据模型自动迁移创建表
 	db.AutoMigrate(&User{},&Category{},&Article{})
 
 	sqlDb,_:=db.DB()

@@ -33,17 +33,18 @@ func CreateCate(data *Category)int{
 }
 
 //GetCate 查询分类列表
-func GetCate(pageSize,pageNo int)[]Category{
+func GetCate(pageSize,pageNo int)([]Category,int64){
 	var cate []Category
+	var total int64
 	offset := (pageNo-1)*pageSize
 	if pageNo == -1 && pageSize == -1{
 		offset = -1
 	}
-	err = db.Limit(pageSize).Offset(offset).Find(&cate).Error
+	err = db.Limit(pageSize).Offset(offset).Find(&cate).Count(&total).Error
 	if err != nil && err != gorm.ErrRecordNotFound{
-		return nil
+		return nil,0
 	}
-	return cate
+	return cate,total
 }
 
 //EditCate 编辑分类

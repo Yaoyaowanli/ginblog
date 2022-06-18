@@ -31,7 +31,7 @@ func AddCate(c *gin.Context)  {
 	})
 }
 
-//查询单个用户
+
 
 
 //GetCate 查询类别列表
@@ -44,12 +44,13 @@ func GetCate(c *gin.Context){
 	if pageNo == 0 {
 		pageNo = -1
 	}
-	cate := model.GetCate(pageSize,pageNo)
+	cate,total := model.GetCate(pageSize,pageNo)
 	code = errmsg.SUCCESS
 	c.JSON(http.StatusOK,gin.H{
 		"status":code,
 		"data":cate,
 		"message":errmsg.GetErrMsg(code),
+		"total":total,
 	})
 }
 
